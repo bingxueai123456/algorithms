@@ -33,6 +33,7 @@ public class NioServer {
 	}
 
 	public void listen() {
+		System.out.println("监听的线程：" + Thread.currentThread().getName());
 		try {
 			while (true) {
 				int count = selector.select();
@@ -69,7 +70,11 @@ public class NioServer {
 
 	private void readData(SelectionKey key) {
 		SocketChannel accept = null;
-
+		try {
+			Thread.sleep(3000L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		try {
 			accept = (SocketChannel) key.channel();
 			ByteBuffer allocate = ByteBuffer.allocate(1024);
